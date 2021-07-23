@@ -8,18 +8,7 @@
 </head>
 <body>
     <h1>Don't forget their birthday!</h1>
-    <ul>
-        <% for(let i=0; i < zebra.length; i++) { %> 
-            <li class="todoItem">
-                <% if(zebra[i].completed === true) {%>
-                <span class="completed"><%= zebra[i].todo %></span> 
-                <% }else{ %>
-                    <span><%= zebra[i].todo %></span>    
-                    <%} %>
-                <span class="del">DELETE</span>
-            </li>
-        <% } %>     
-    </ul>
+    
     <form>
         <input type="text" placeholder="Search by Name" name="firstName"></input>
         <input type="submit">
