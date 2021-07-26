@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.render('index.ejs')
+    res.render('index.ejs', {info: []})
 })
 
 //home page with search options--name, nickname, month

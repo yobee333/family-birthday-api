@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <% if(info){ %>
+        <% console.log("info inside ejs: ", info) %>
+    <% } %>
     <h1>Don't forget their birthday!</h1>
 
     <!-- I know I need a for loop and the % to search by name -->
@@ -17,7 +20,7 @@
 
     <section>
         <h3>Add a birthday</h3>
-        <form action="/addBirthday" method="POST">
+        <form action=" /addBirthday" method="POST">
             <input type="text" placeholder="First Name" name="firstName"></input>
             <input type="text" placeholder="Nick Name" name="nickName"></input>
             <label for="Month">Month</label>
@@ -47,9 +50,9 @@
 
 
 
-        </form>
-    </section>
-    <script src="js/main.js"></script>
+            </form>
+            </section>
+            <script src="js/main.js"></script>
 </body>
 
 </html>
