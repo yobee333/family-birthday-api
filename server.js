@@ -35,6 +35,15 @@ app.get('/', async (req, res) => {
 })
 
 //add new birthday
+//This is the schema I need for each person
+// let person = {
+//     firstName: "firstName",
+//     nickName: "nickName",
+//     month: "month",
+//     day: day
+// }
+
+
 app.post('/addBirthday', (req, res) => {//whatever our action is the name of our route in the post
     db.collection('birthdays').insertOne({ firstName: request.body.firtName, nickName: request.body.nickName, birthday: request.body.birthday })//method allows us to insert document into todo. Need 2 properties: actual todo and whether or not it's completed. Get the information from the form from the request. This will make a todo property and value will come from the input on our form. Completed property will always be false. This is a promise.
         .then(res => {
@@ -44,13 +53,7 @@ app.post('/addBirthday', (req, res) => {//whatever our action is the name of our
 })
 
 
-//This is the schema I need for each person
-// let person = {
-//     firstName: "firstName",
-//     nickName: "nickName",
-//     month: "month",
-//     day: day
-// }
+
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`server is running on port ${PORT} hope you are having a good day!`)
