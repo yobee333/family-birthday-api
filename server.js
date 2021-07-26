@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 app.get('/filterBirthdays', async (req, res) => {
     const month = req.query.month
     const getBirthday = await db.collection('birthdays').find({month}).toArray()
-    console.log(getBirthday)
+    console.log("get Birthday", getBirthday)
     res.render('index.ejs', { info: getBirthday })
 })
 
