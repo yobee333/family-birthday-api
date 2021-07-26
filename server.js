@@ -8,7 +8,7 @@ const PORT = 2323
 
 let db,
     dbConnectionStr = process.env.DB_STRING,
-dbName = "birthdays"
+    dbName = "birthdays"
 
 MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     .then(client => {
@@ -29,24 +29,18 @@ app.get('/', (req, res) => {
 })
 
 //home page with search options--name, nickname, month
-app.get('/',(req, res)=>{
-    db.collection('birthdays').find().toArray()
-    .then(data => {
-        res.render('index.ejs', { info: data })
-    })
-    .catch(error => console.error(error))
+app.get('/', async (req, res) => {
+    const getBirthday = await db.collection('birthdays').find().toArray()
+    res.render('index.ejs', { info: getBirthday })
 })
 
-//add a new birthday
-app.post('/addBirthday', (req, res) => {
-    db.collection('birthdays').insertOne(
-        {firstName: request.body.firtName, nickName: request.body.nickName, birthday: request.body.birthday})
+//add new birthday
+app.post('/addBirthday', (req, res) => {//whatever our action is the name of our route in the post
+    db.collection('birthdays').insertOne({ firstName: request.body.firtName, nickName: request.body.nickName, birthday: request.body.birthday })//method allows us to insert document into todo. Need 2 properties: actual todo and whether or not it's completed. Get the information from the form from the request. This will make a todo property and value will come from the input on our form. Completed property will always be false. This is a promise.
         .then(res => {
-            console.log('birthday added')
+            console.log('Birthday has been added')
             res.redirect('/')
-
         })
-        .catch(err => console.log(err))
 })
 
 
