@@ -44,11 +44,11 @@ app.get('/', async (req, res) => {
 // }
 
 
-app.post('/addBirthday', (req, res) => {//whatever our action is the name of our route in the post
-    db.collection('birthdays').insertOne({ firstName: request.body.firtName, nickName: request.body.nickName, birthday: request.body.birthday })//method allows us to insert document into todo. Need 2 properties: actual todo and whether or not it's completed. Get the information from the form from the request. This will make a todo property and value will come from the input on our form. Completed property will always be false. This is a promise.
-        .then(res => {
+app.post('/addBirthday', (req, response) => {
+    db.collection('birthdays').insertOne({ firstName: req.body.firstName, nickName: req.body.nickName, month: req.body.month, day: req.body.date })
+        .then(ressponse => {
             console.log('Birthday has been added')
-            res.redirect('/')
+            response.redirect('/')
         })
 })
 
