@@ -29,6 +29,15 @@ app.get('/', (req, res) => {
 })
 
 //home page with search options--name, nickname, month
+
+app.get('/filterBirthdays', async (req, res) => {
+    const month = req.query.month
+    const getBirthday = await db.collection('birthdays').find({month}).toArray()
+    console.log(getBirthday)
+    res.render('index.ejs', { info: getBirthday })
+})
+
+
 app.get('/', async (req, res) => {
     const getBirthday = await db.collection('birthdays').find().toArray()
     res.render('index.ejs', { info: getBirthday })
@@ -46,7 +55,7 @@ app.get('/', async (req, res) => {
 
 app.post('/addBirthday', (req, response) => {
     db.collection('birthdays').insertOne({ firstName: req.body.firstName, nickName: req.body.nickName, month: req.body.month, day: req.body.date })
-        .then(response => {
+        .then(res => {
             console.log('Birthday has been added')
             response.redirect('/')
         })
