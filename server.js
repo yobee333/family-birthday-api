@@ -46,7 +46,7 @@ app.get('/', async (req, res) => {
 
 app.post('/addBirthday', (req, response) => {
     db.collection('birthdays').insertOne({ firstName: req.body.firstName, nickName: req.body.nickName, month: req.body.month, day: req.body.date })
-        .then(ressponse => {
+        .then(response => {
             console.log('Birthday has been added')
             response.redirect('/')
         })
