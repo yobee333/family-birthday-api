@@ -44,6 +44,7 @@ app.post('/addBirthday', (req, res) => {
         .then(res => {
             console.log('birthday added')
             res.redirect('/')
+
         })
         .catch(err => console.log(err))
 })

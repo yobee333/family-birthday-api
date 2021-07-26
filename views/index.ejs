@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
@@ -7,39 +8,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Birthday Tracker</title>
 </head>
+
 <body>
     <h1>Don't forget their birthday!</h1>
-    
-    <form>
-        <input type="text" placeholder="First Name" name="firstName"></input>
-        <input type="text" placeholder="Nick Name" name="nickName"></input>
-		<label for="Month">Month</label>
-		<select id="month" name="month" size="1">
-			<option value="january">January</option>
-			<option value="february">February</option>
-			<option value="march">March</option>
-			<option value="april">April</option>
-			<option value="may">May</option>
-			<option value="june">June</option>
-			<option value="july">July</option>
-			<option value="august">August</option>
-			<option value="september">September</option>
-			<option value="october">October</option>
-			<option value="november">November</option>
-			<option value="december">December</option>
-		</select>
-	
-		
-		<label for="date">Day</label>
-		<select id="date" name="date" size="1">
-			
-		
-		</select>
-	
-		<input id="submit" type="button" value="submit" class="button">
+
+    <!-- I know I need a for loop and the % to search by name -->
+    <h2>Find a birthday</h2>
+
+    <section>
+        <h3>Add a birthday</h3>
+        <form action="/addBirthday" method=POST>
+            <input type="text" placeholder="First Name" name="firstName"></input>
+            <input type="text" placeholder="Nick Name" name="nickName"></input>
+            <label for="Month">Month</label>
+            <select id="month" name="month" size="1">
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+            </select>
+
+
+            <label for="date">Day</label>
+            <select id="date" name="date" size="1">
+
+
+            </select>
+    </section>
+    <input id="submit" type="button" value="submit" class="button">
 
 
     </form>
     <script src="js/main.js"></script>
 </body>
+
 </html>
