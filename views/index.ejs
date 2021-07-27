@@ -51,8 +51,22 @@
 
 
             </form>
+
+            <section class="birthday-list">
+                <ul class="birthday-info">
+                    <% for(let birthday of info){ %>
+                        <li>
+                            <%= `${birthday.firstName} - ${birthday.nickName} - ${birthday.month} ${birthday.day}`%>
+                        </li>
+                        <% } %>
+                </ul>
             </section>
+
+
             <script src="js/main.js"></script>
 </body>
+
+
+
 
 </html>
