@@ -30,6 +30,13 @@ app.get('/', (req, res) => {
 
 //home page with search options--name, nickname, month
 
+app.get('/', async (req, res) => {
+    const getBirthday = await db.collection('birthdays').find().toArray()
+    res.render('index.ejs', { info: getBirthday })
+})
+
+//sort birthdays by month to get all birthdays in that month
+
 app.get('/filterBirthdays', async (req, res) => {
     const month = req.query.month
     const getBirthday = await db.collection('birthdays').find({month}).toArray()
@@ -37,11 +44,6 @@ app.get('/filterBirthdays', async (req, res) => {
     res.render('index.ejs', { info: getBirthday })
 })
 
-
-app.get('/', async (req, res) => {
-    const getBirthday = await db.collection('birthdays').find().toArray()
-    res.render('index.ejs', { info: getBirthday })
-})
 
 //add new birthday
 //This is the schema I need for each person
@@ -51,7 +53,6 @@ app.get('/', async (req, res) => {
 //     month: "month",
 //     day: day
 // }
-
 
 app.post('/addBirthday', (req, response) => {
     db.collection('birthdays').insertOne({ firstName: req.body.firstName, nickName: req.body.nickName, month: req.body.month, day: req.body.date })
