@@ -14,11 +14,28 @@
         <% console.log("info inside ejs: ", info) %>
     <% } %>
     <h1>Don't forget their birthday!</h1>
-
-   
-    <h2>Find a birthday</h2>
-
-    <section>
+    <section class="find-birthday-month">
+        <h2>Find a birthday by month</h2>
+        <form action=" /filterBirthdays" method="GET">
+            <label for="Month">Month</label>
+            <select id="month" name="month" size="1">
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+            </select>
+            <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
+        </form>
+    </section>
+    <section class="addBirthday">
         <h3>Add a birthday</h3>
         <form action=" /addBirthday" method="POST">
             <input type="text" placeholder="First Name" name="firstName"></input>
@@ -38,7 +55,7 @@
                 <option value="november">November</option>
                 <option value="december">December</option>
             </select>
-
+            
 
             <label for="date">Day</label>
             <select id="date" name="date" size="1">
