@@ -52,6 +52,16 @@ app.get('/filterFirstName', async (req, res) => {
     res.render('index.ejs', { info: getBirthday })
 })
 
+
+//find birthday by nickname
+app.get('/filterNickName', async (req, res) => {
+    const nickName = req.query.nickName
+    const getBirthday = await db.collection('birthdays').find({nickName}).toArray()
+    console.log("get Birthday", getBirthday)
+    res.render('index.ejs', { info: getBirthday })
+})
+
+
 //add new birthday
 //This is the schema I need for each person
 // let person = {
