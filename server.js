@@ -71,15 +71,26 @@ app.get('/filterNickName', async (req, res) => {
 //     day: day
 // }
 
-app.post('/addBirthday', (req, response) => {
-    db.collection('birthdays').insertOne({ firstName: req.body.firstName, nickName: req.body.nickName, month: req.body.month, day: req.body.date })
-        .then(res => {
+// app.post('/addBirthday', (req, response) => {
+//     db.collection('birthdays').insertOne({ firstName: req.body.firstName, nickName: req.body.nickName, month: req.body.month, day: req.body.date })
+//         .then(res => {
+//             console.log('Birthday has been added')
+//             response.redirect('/')
+//         })
+// })
+
+
+app.post('/addBirthday', async (req, res) => {
+    const birthday = await db.collection('birthdays').insertOne({ 
+        firstName: req.body.firstName, 
+        nickName: req.body.nickName, 
+        month: req.body.month, 
+        day: req.body.date
+    })
+        
             console.log('Birthday has been added')
-            response.redirect('/')
+            res.render('index.ejs', {info: []})
         })
-})
-
-
 
 
 app.listen(process.env.PORT || PORT, () => {
