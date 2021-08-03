@@ -46,7 +46,7 @@ app.get('/filterBirthdays', async (req, res) => {
 
 //find birthday by name
 app.get('/filterFirstName', async (req, res) => {
-    const month = req.query.month
+    const firstName = req.query.firstName
     const getBirthday = await db.collection('birthdays').find({firstName}).toArray()
     console.log("get Birthday", getBirthday)
     res.render('index.ejs', { info: getBirthday })

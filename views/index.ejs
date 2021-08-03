@@ -14,6 +14,12 @@
         <% console.log("info inside ejs: ", info) %>
     <% } %>
     <h1>Don't forget their birthday!</h1>
+    <section class="find-birthday-name">
+        <form action="/filterFirstName" method="GET">
+            <input type="text" placeholder="First Name" name="firstName">First Name</input>
+            <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
+        </form>
+    </section>
     <section class="find-birthday-month">
         <h2>Find a birthday by month</h2>
         <form action=" /filterBirthdays" method="GET">
