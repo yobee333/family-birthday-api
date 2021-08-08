@@ -15,14 +15,14 @@
     <% } %>
     <h1>Don't forget their birthday!</h1>
     <section class=" find-birthday-name">
-            <form action="/filterFirstName" method="GET">
-                <input type="text" placeholder="First Name" name="firstName">First Name</input>
+            <form action="/filterByName" method="GET">
+                <input type="text" placeholder="Name" name="searchTerm">First Name</input>
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
             </form>
-            <form action="/filterNickName" method="GET">
+            <!-- <form action="/filterNickName" method="GET">
                 <input type="text" placeholder="Nick Name" name="nickName">Nickname</input>
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
-            </form>
+            </form> -->
             </section>
             <section class="find-birthday-month">
                 <h2>Find a birthday by month</h2>
@@ -45,52 +45,23 @@
                     <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
                 </form>
             </section>
-            <section class="addBirthday">
-                <h3>Add a birthday</h3>
-                <form action=" /addBirthday" method="POST">
-                    <input type="text" placeholder="First Name" name="firstName"></input>
-                    <input type="text" placeholder="Nick Name" name="nickName"></input>
-                    <label for="Month">Month</label>
-                    <select id="month" name="month" size="1">
-                        <option value="january">January</option>
-                        <option value="february">February</option>
-                        <option value="march">March</option>
-                        <option value="april">April</option>
-                        <option value="may">May</option>
-                        <option value="june">June</option>
-                        <option value="july">July</option>
-                        <option value="august">August</option>
-                        <option value="september">September</option>
-                        <option value="october">October</option>
-                        <option value="november">November</option>
-                        <option value="december">December</option>
-                    </select>
 
 
-                    <label for="date">Day</label>
-                    <select id="date" name="date" size="1">
+            <section class="birthday-list">
+                <ul class="birthday-info">
+                    <% for(let birthday of info){ %>
+                        <li>
 
+                            <%= `${birthday.firstName}${birthday.nickName ? ` "${birthday.nickName}" ` : '' } -
+                                ${birthday.month.toUpperCase()} ${birthday.day}`%>
 
-                    </select>
+                        </li>
+                        <% } %>
+                </ul>
+            </section>
+<h4><a href="/birthdayForm">add birthday</a></h4>
 
-                    <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
-
-
-
-                </form>
-
-                <section class="birthday-list">
-                    <ul class="birthday-info">
-                        <% for(let birthday of info){ %>
-                            <li>
-                                <%= `${birthday.firstName} - ${birthday.nickName} - ${birthday.month} ${birthday.day}`%>
-                            </li>
-                            <% } %>
-                    </ul>
-                </section>
-
-
-                <script src="js/main.js"></script>
+            <script src="js/main.js"></script>
 </body>
 
 
