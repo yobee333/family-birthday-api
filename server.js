@@ -27,11 +27,16 @@ app.use(express.json())
 app.get('/', (req, res) => {
     res.render('index.ejs', {info: []})
 })
+async function createSearchOptions(userId, options = {}){
+    const results = await db.collection('birthdays').find({$where: { userId }, ...options}).toArray()
+    return results;
+}
 
 //home page with search options--name, nickname, month
 
-app.get('/', async (req, res) => {
-    const getBirthday = await db.collection('birthdays').find().toArray()
+app.get('/', authenticationMiddleware, async (req, res) => {
+    const { userId } = req.user;
+    const getBirthday = await db.collection('birthdays').find({$where: { userId }}).toArray()
     res.render('index.ejs', { info: getBirthday })
 })
 
@@ -42,6 +47,21 @@ app.get('/filterBirthdays', async (req, res) => {
     const getBirthday = await db.collection('birthdays').find({month}).toArray()
     console.log("get Birthday", getBirthday)
     res.render('index.ejs', { info: getBirthday })
+})
+
+// find by all names
+app.get('/filterByName', async( req, res )=>{
+    const { searchTerm } = req.query;
+    const regex = new RegExp(searchTerm, 'gi');
+    const matches = await db.collection('birthdays').find(
+        {
+        $or: [
+                { firstName: regex }, 
+                { nickName: regex }
+            ]
+        }
+    ).toArray();
+    res.render('index.ejs', { info: matches })
 })
 
 //find birthday by name
@@ -79,6 +99,9 @@ app.get('/filterNickName', async (req, res) => {
 //         })
 // })
 
+app.get('/birthdayForm', (req, res) => {
+    res.render('addbirthday.ejs')
+})
 
 app.post('/addBirthday', async (req, res) => {
     const birthday = await db.collection('birthdays').insertOne({ 
