@@ -20,6 +20,8 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         console.log(err)
     })
 
+
+
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -30,7 +32,7 @@ app.use(express.json())
 const { auth, requiresAuth } = require('express-openid-connect');
 app.use(
     auth({
-        authRequired: false,
+        authRequired: true,
         auth0Logout: true,
         issuerBaseURL: process.env.ISSUER_BASE_URL,
         baseURL: process.env.BASE_URL,
@@ -57,18 +59,29 @@ app.get('/profile', requiresAuth(), (req, res) => {
 app.get('/', (req, res) => {
     res.render('index.ejs', { info: [] })
 })
-async function createSearchOptions(userId, options = {}) {
-    const results = await db.collection('birthdays').find({ $where: { userId }, ...options }).toArray()
+// async function createSearchOptions(userId, options = {}) {
+//     const results = await db.collection('birthdays').find({ $where: { userId }, ...options }).toArray()
+//     return results;
+// }
+
+async function createSearchOptions(user, options = {}) {
+    const results = await db.collection('birthdays').find({ $where: { user}, ...options }).toArray()
     return results;
 }
-
 //home page with search options--name, nickname, month
 
+// app.get('/', auth, async (req, res) => {
+//     const { userId } = req.user;
+//     const getBirthday = await db.collection('birthdays').find({ $where: { userId } }).toArray()
+//     res.render('index.ejs', { info: getBirthday })
+// })
+
 app.get('/', auth, async (req, res) => {
-    const { userId } = req.user;
-    const getBirthday = await db.collection('birthdays').find({ $where: { userId } }).toArray()
+    const { user } = req.user;
+    const getBirthday = await db.collection('birthdays').find({ $where: { user} }).toArray()
     res.render('index.ejs', { info: getBirthday })
 })
+
 
 //sort birthdays by month to get all birthdays in that month
 
