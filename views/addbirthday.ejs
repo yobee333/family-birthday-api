@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +14,10 @@
     <section class="addBirthday">
         <h3>Add a birthday</h3>
         <form action=" /addBirthday" method="POST">
+            <label for="First Name">First Name</label>
             <input type="text" placeholder="First Name" name="firstName"></input>
-            <input type="text" placeholder="Nick Name" name="nickName"></input>
+            <label for="Nickname">Nickname</label>
+            <input type="text" placeholder="Nickname" name="nickName"></input>
             <label for="Month">Month</label>
             <select id="month" name="month" size="1">
                 <option value="January">January</option>

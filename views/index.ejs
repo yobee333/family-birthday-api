@@ -3,6 +3,9 @@
 
 <head>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +18,7 @@
     <% } %>
     <h1>Search for a birthday</h1>
     <section class="find-birthday-name container">
+        <h2>Search by Name</h2>
             <form action="/filterByName" method="GET">
                 <label for="Name or Nickname">Name or Nickname</label>
                 <input type="text" placeholder="Name or Nickname" name="searchTerm"></input>
@@ -25,23 +29,23 @@
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
             </form> -->
             </section>
-            <section class="find-birthday-month">
-                <h2>Find a birthday by month</h2>
+            <section class="find-birthday-month container">
+                <h2>Search by month</h2>
                 <form action=" /filterBirthdays" method="GET">
                     <label for="Month">Month</label>
                     <select id="month" name="month" size="1">
-                        <option value="january">January</option>
-                        <option value="february">February</option>
-                        <option value="march">March</option>
-                        <option value="april">April</option>
-                        <option value="may">May</option>
-                        <option value="june">June</option>
-                        <option value="july">July</option>
-                        <option value="august">August</option>
-                        <option value="september">September</option>
-                        <option value="october">October</option>
-                        <option value="november">November</option>
-                        <option value="december">December</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
                     </select>
                     <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
                 </form>
@@ -54,7 +58,7 @@
                         <li>
 
                             <%= `${birthday.firstName}${birthday.nickName ? ` "${birthday.nickName}" ` : '' } -
-                                ${birthday.month.toUpperCase()} ${birthday.day}`%>
+                                ${birthday.month} ${birthday.day}`%>
 
                         </li>
                         <% } %>

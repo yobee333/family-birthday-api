@@ -32,5 +32,19 @@ body{
     justify-content: center;
     height: 100vh;
     overflow: hidden;
-    margin: 0;
+    margin: 10px;
+    
+}
+
+.container{
+    width: 80%;
+    border: 2px solid red;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form{
+    align-items: center;
 }
