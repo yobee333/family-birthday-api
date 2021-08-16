@@ -3,7 +3,8 @@ const app = express()
 require('dotenv').config()
 
 const MongoClient = require('mongodb').MongoClient
-const PORT = 2323
+const PORT = process.env.PORT || 3000
+
 
 
 let db,
@@ -24,39 +25,61 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+
+
+const { auth } = require('express-openid-connect');
+app.use(
+    auth({
+        issuerBaseURL: process.env.ISSUER_BASE_URL,
+        baseURL: process.env.BASE_URL,
+        clientID: process.env.CLIENT_ID,
+        secret: process.env.SECRET,
+        idpLogout: true,
+    })
+);
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
 app.get('/', (req, res) => {
-    res.render('index.ejs', {info: []})
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
+
+
+app.get('/', (req, res) => {
+    res.render('index.ejs', { info: [] })
 })
-async function createSearchOptions(userId, options = {}){
-    const results = await db.collection('birthdays').find({$where: { userId }, ...options}).toArray()
+async function createSearchOptions(userId, options = {}) {
+    const results = await db.collection('birthdays').find({ $where: { userId }, ...options }).toArray()
     return results;
 }
 
 //home page with search options--name, nickname, month
 
-app.get('/', authenticationMiddleware, async (req, res) => {
-    const { userId } = req.user;
-    const getBirthday = await db.collection('birthdays').find({$where: { userId }}).toArray()
-    res.render('index.ejs', { info: getBirthday })
-})
+// app.get('/', authenticationMiddleware, async (req, res) => {
+//     const { userId } = req.user;
+//     const getBirthday = await db.collection('birthdays').find({ $where: { userId } }).toArray()
+//     res.render('index.ejs', { info: getBirthday })
+// })
 
 //sort birthdays by month to get all birthdays in that month
 
 app.get('/filterBirthdays', async (req, res) => {
     const month = req.query.month
-    const getBirthday = await db.collection('birthdays').find({month}).toArray()
+    const getBirthday = await db.collection('birthdays').find({ month }).toArray()
     console.log("get Birthday", getBirthday)
     res.render('index.ejs', { info: getBirthday })
 })
 
 // find by all names
-app.get('/filterByName', async( req, res )=>{
+app.get('/filterByName', async (req, res) => {
     const { searchTerm } = req.query;
     const regex = new RegExp(searchTerm, 'gi');
     const matches = await db.collection('birthdays').find(
         {
-        $or: [
-                { firstName: regex }, 
+            $or: [
+                { firstName: regex },
                 { nickName: regex }
             ]
         }
@@ -67,7 +90,7 @@ app.get('/filterByName', async( req, res )=>{
 //find birthday by name
 app.get('/filterFirstName', async (req, res) => {
     const firstName = req.query.firstName
-    const getBirthday = await db.collection('birthdays').find({firstName}).toArray()
+    const getBirthday = await db.collection('birthdays').find({ firstName }).toArray()
     console.log("get Birthday", getBirthday)
     res.render('index.ejs', { info: getBirthday })
 })
@@ -76,7 +99,7 @@ app.get('/filterFirstName', async (req, res) => {
 //find birthday by nickname
 app.get('/filterNickName', async (req, res) => {
     const nickName = req.query.nickName
-    const getBirthday = await db.collection('birthdays').find({nickName}).toArray()
+    const getBirthday = await db.collection('birthdays').find({ nickName }).toArray()
     console.log("get Birthday", getBirthday)
     res.render('index.ejs', { info: getBirthday })
 })
@@ -104,16 +127,16 @@ app.get('/birthdayForm', (req, res) => {
 })
 
 app.post('/addBirthday', async (req, res) => {
-    const birthday = await db.collection('birthdays').insertOne({ 
-        firstName: req.body.firstName, 
-        nickName: req.body.nickName, 
-        month: req.body.month, 
+    const birthday = await db.collection('birthdays').insertOne({
+        firstName: req.body.firstName,
+        nickName: req.body.nickName,
+        month: req.body.month,
         day: req.body.date
     })
-        
-            console.log('Birthday has been added')
-            res.render('index.ejs', {info: []})
-        })
+
+    console.log('Birthday has been added')
+    res.render('index.ejs', { info: [] })
+})
 
 
 app.listen(process.env.PORT || PORT, () => {
