@@ -21,9 +21,12 @@
         <h2>Search by Name</h2>
             <form action="/filterByName" method="GET">
                 <label for="Name or Nickname">Name or Nickname</label>
-                <input type="text" placeholder="Name or Nickname" name="searchTerm"></input>
+                <input type="text" placeholder="Name or Nickname" name="searchTerm" required></input>
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
             </form>
+            <form action="/filterByName" method="GET">
+            <button id="submit" type="submit" value="submit" class="button">Get All Birthdays</button>
+        </form>
             <!-- <form action="/filterNickName" method="GET">
                 <input type="text" placeholder="Nick Name" name="nickName">Nickname</input>
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
@@ -60,8 +63,9 @@
                             <%= `${birthday.firstName}${birthday.nickName ? ` "${birthday.nickName}" ` : '' } -
                                 ${birthday.month} ${birthday.day}`%>
 
-                        </li>
+                        </li><span class="del">DELETE</span>
                         <% } %>
+                        
                 </ul>
             </section>
 <h4><a href="/birthdayForm">add birthday</a></h4>

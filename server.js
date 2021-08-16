@@ -28,6 +28,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
+app.get('/', (req, res) => {
+    res.render('index.ejs', { info: [] })
+})
+
 //Auth0
 const { auth, requiresAuth } = require('express-openid-connect');
 app.use(
@@ -46,7 +50,7 @@ app.use(
 // app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
+app.get('/login', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
@@ -56,9 +60,7 @@ app.get('/profile', requiresAuth(), (req, res) => {
 
 
 
-app.get('/', (req, res) => {
-    res.render('index.ejs', { info: [] })
-})
+
 // async function createSearchOptions(userId, options = {}) {
 //     const results = await db.collection('birthdays').find({ $where: { userId }, ...options }).toArray()
 //     return results;
@@ -103,7 +105,7 @@ app.get('/filterByName', async (req, res) => {
                 { nickName: regex }
             ]
         }
-    ).toArray();
+    ).sort({firstName: 1}).toArray();
     res.render('index.ejs', { info: matches })
 })
 
@@ -152,6 +154,19 @@ app.post('/addBirthday', async (req, res) => {
     res.render('index.ejs', { info: [] })
 })
 
+//Delete birthday
+
+app.delete('/deleteBirthday', (req, res) => {
+    const birthday = await.db.collection('birthdays').deleteOne({
+        user: req.oidc.user,
+        firstName: req.body.firstName,
+        nickName: req.body.nickName,
+        month: req.body.month,
+        day: req.body.date
+    })
+    console.log('Birthday has been deleted')
+    res.render('index.ejs', {info: []} )
+})
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`server is running on port ${PORT} hope you are having a good day!`)
