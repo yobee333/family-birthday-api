@@ -6,17 +6,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Birthday Tracker</title>
+    <title>Family Birthday</title>
 </head>
 
 <body>
     <% if(info){ %>
         <% console.log("info inside ejs: ", info) %>
     <% } %>
-    <h1>Don't forget their birthday!</h1>
-    <section class=" find-birthday-name">
+    <h1>Search for a birthday</h1>
+    <section class="find-birthday-name container">
             <form action="/filterByName" method="GET">
-                <input type="text" placeholder="Name" name="searchTerm">First Name</input>
+                <label for="Name or Nickname">Name or Nickname</label>
+                <input type="text" placeholder="Name or Nickname" name="searchTerm"></input>
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
             </form>
             <!-- <form action="/filterNickName" method="GET">

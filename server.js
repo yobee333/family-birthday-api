@@ -134,13 +134,6 @@ app.get('/filterNickName', async (req, res) => {
 //     day: day
 // }
 
-// app.post('/addBirthday', (req, response) => {
-//     db.collection('birthdays').insertOne({ firstName: req.body.firstName, nickName: req.body.nickName, month: req.body.month, day: req.body.date })
-//         .then(res => {
-//             console.log('Birthday has been added')
-//             response.redirect('/')
-//         })
-// })
 
 app.get('/birthdayForm', (req, res) => {
     res.render('addbirthday.ejs')
@@ -148,6 +141,7 @@ app.get('/birthdayForm', (req, res) => {
 
 app.post('/addBirthday', async (req, res) => {
     const birthday = await db.collection('birthdays').insertOne({
+        user: req.oidc.user,
         firstName: req.body.firstName,
         nickName: req.body.nickName,
         month: req.body.month,
