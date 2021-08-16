@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient
 const PORT = process.env.PORT || 3000
 
 
-
+//MongoDB
 let db,
     dbConnectionStr = process.env.DB_STRING,
     dbName = "birthdays"
@@ -26,10 +26,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
-
-const { auth } = require('express-openid-connect');
+//Auth0
+const { auth, requiresAuth } = require('express-openid-connect');
 app.use(
     auth({
+        authRequired: false,
+        auth0Logout: true,
         issuerBaseURL: process.env.ISSUER_BASE_URL,
         baseURL: process.env.BASE_URL,
         clientID: process.env.CLIENT_ID,
@@ -39,12 +41,17 @@ app.use(
 );
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
-app.use(auth(config));
+// app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
 app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
+
+app.get('/profile', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user))
+})
+
 
 
 app.get('/', (req, res) => {
@@ -57,11 +64,11 @@ async function createSearchOptions(userId, options = {}) {
 
 //home page with search options--name, nickname, month
 
-// app.get('/', authenticationMiddleware, async (req, res) => {
-//     const { userId } = req.user;
-//     const getBirthday = await db.collection('birthdays').find({ $where: { userId } }).toArray()
-//     res.render('index.ejs', { info: getBirthday })
-// })
+app.get('/', auth, async (req, res) => {
+    const { userId } = req.user;
+    const getBirthday = await db.collection('birthdays').find({ $where: { userId } }).toArray()
+    res.render('index.ejs', { info: getBirthday })
+})
 
 //sort birthdays by month to get all birthdays in that month
 
