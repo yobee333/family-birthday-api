@@ -17,8 +17,8 @@ function alertBirthdayAdded(){
 // write a fetch request inside the listener to a route on your server that accepts a birthday by id
 // on the server, search your db by birthday id and delete it
 // do window.reload here in client js to reload the page
-const listedBirthday = document.querySelectorAll('.birthday-info span')
-const deleteBtn = document.querySelectorAll('.del')
+
+const deleteBtn = document.querySelectorAll('.delete-button')
 
 Array.from(deleteBtn).forEach((el) =>{
     el.addEventListener('click', removeBirthday)

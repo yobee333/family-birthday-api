@@ -4,8 +4,8 @@
 <head>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,16 +17,14 @@
         <% console.log("info inside ejs: ", info) %>
     <% } %>
     <h1>Search for a birthday</h1>
-    <section class="find-birthday-name container">
-        <h2>Search by Name</h2>
+    <section class=" find-birthday-name container">
+            <h2>Search by Name</h2>
             <form action="/filterByName" method="GET">
                 <label for="Name or Nickname">Name or Nickname</label>
                 <input type="text" placeholder="Name or Nickname" name="searchTerm" required></input>
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
             </form>
-            <form action="/filterByName" method="GET">
-            <button id="submit" type="submit" value="submit" class="button">Get All Birthdays</button>
-        </form>
+
             <!-- <form action="/filterNickName" method="GET">
                 <input type="text" placeholder="Nick Name" name="nickName">Nickname</input>
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
@@ -53,22 +51,30 @@
                     <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
                 </form>
             </section>
+            <section class="all-birthdays container">
+                <form action="/filterByName" method="GET">
+                    <button id="submit" type="submit" value="submit" class="button">Get All Birthdays</button>
+                </form>
+            </section>
 
-
-            <section class="birthday-list">
+            <section class="birthday-list container">
                 <ul class="birthday-info">
                     <% for(let birthday of info){ %>
-                        <li>
+                        <div class="everyone">
+                            <li>
 
-                            <%= `${birthday.firstName}${birthday.nickName ? ` "${birthday.nickName}" ` : '' } -
-                                ${birthday.month} ${birthday.day}`%>
+                                <%= `${birthday.firstName}${birthday.nickName ? ` "${birthday.nickName}" ` : '' } -
+                                    ${birthday.month} ${birthday.day}`%>
 
-                        </li><span class="del">DELETE</span>
+                            </li>
+                            <button class="delete-button">X</button>
+                        </div>
+
                         <% } %>
-                        
+
                 </ul>
             </section>
-<h4><a href="/birthdayForm">add birthday</a></h4>
+            <h4><a href="/birthdayForm">add birthday</a></h4>
 
             <script src="js/main.js"></script>
 </body>
