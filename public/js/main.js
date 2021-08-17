@@ -38,9 +38,9 @@ async function removeBirthday(event){
 
 //logout alert
 
-document.querySelector('logout').addEventListener('click', alertLogout)
+document.querySelector('#logout').addEventListener('click', alertLogout)
 
 
-function alertBirthdayAdded(){
+function alertLogout(){
     alert('You have been logged out')
 }
