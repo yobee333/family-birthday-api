@@ -1,16 +1,3 @@
-//list of days so I don't have to type
-
-for(let i=1; i<=31; i++){
-    document.getElementById('date').innerHTML += `<option value="${i}">${i}</option>`
-}
-
-document.querySelector('button').addEventListener('click', alertBirthdayAdded)
-
-
-function alertBirthdayAdded(){
-    alert('Birthday Added Successfully')
-}
-
 // to enable delete: 
 // do a querySelectorAll for a class on your delete buttons for each birthday
 // add an event listener to each instance by iterating over with a forEach loop
@@ -24,14 +11,20 @@ Array.from(deleteBtn).forEach((el) =>{
     el.addEventListener('click', removeBirthday)
 })
 
-async function removeBirthday(){
-    const birthdayDelete = this.parentNode.childNodes[1].innerText
+async function removeBirthday(event){
+    console.log("Event object inside event listener: ", event)
+    
+    const parentNode = event.target.parentNode;
+    console.log("parentNode: ", parentNode)
+    const birthdayId = parentNode.dataset.userid
+
+    console.log("Birthday document id from div dataset: ", birthdayId)
     try{
         const response = await fetch('deleteBirthday', {
             method: 'delete',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
-                'birthday': info
+                id: birthdayId
             })
         })
         const data = await response.json()
@@ -40,4 +33,14 @@ async function removeBirthday(){
     }catch(error){
         console.log(error)
     }
+}
+
+
+//logout alert
+
+document.querySelector('logout').addEventListener('click', alertLogout)
+
+
+function alertBirthdayAdded(){
+    alert('You have been logged out')
 }

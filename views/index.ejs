@@ -13,9 +13,6 @@
 </head>
 
 <body>
-    <% if(info){ %>
-        <% console.log("info inside ejs: ", info) %>
-    <% } %>
     <h1>Search for a birthday</h1>
     <section class=" find-birthday-name container">
             <h2>Search by Name</h2>
@@ -60,7 +57,7 @@
             <section class="birthday-list container">
                 <ul class="birthday-info">
                     <% for(let birthday of info){ %>
-                        <div class="everyone">
+                        <div class="everyone" data-userid=<%= birthday["_id"] %> >
                             <li>
 
                                 <%= `${birthday.firstName}${birthday.nickName ? ` "${birthday.nickName}" ` : '' } -
@@ -75,6 +72,7 @@
                 </ul>
             </section>
             <h4><a href="/birthdayForm">add birthday</a></h4>
+            <h4 class="logout"><a href="/logout">logout</a></h4>
 
             <script src="js/main.js"></script>
 </body>
