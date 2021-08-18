@@ -27,6 +27,7 @@ body{
     display: flex;
     flex-direction:column;
     align-items: center;
+    font-family: 'Roboto', sans-serif
     
 }
 
@@ -34,7 +35,6 @@ body{
     flex-direction: column;
     padding: 20px;
     margin: 10px;
-    border: 2px solid red;
     width: 50%;
 }
 
@@ -42,19 +42,20 @@ body{
     display: flex;
 }
 
-.everyone:hover{
-    background-color: white;
-    font-family: 'Roboto', sans-serif;
-}
 li{
     padding: 10px;
+    list-style-type: none;
 }
+li:hover{
+    background-color: white;
+}
+
 
 
 .delete-button{
     height: 20px;
     width: 20px;
-    margin-left: 5px;
+    margin-left: 20px;
     margin-top: 8px;
     text-align: center;
     padding: 2px;
@@ -68,5 +69,28 @@ li{
     border-radius: 100%;
     background-color: red;
     border: 2px solid white;
+    color: white;
+}
+
+button, h4{
+    background-color:darkslateblue;
+    border: 2px solid gray;
+    border-radius: 10px;
+    color: white;
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a:link{
+    text-decoration: none;
+    color: white;
+}
+
+a:visited{
+    text-decoration: none;
     color: white;
 }
