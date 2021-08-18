@@ -29,7 +29,8 @@ App is mostly functional! Updates needed:
 
 ### search by name:
 
-<img src="https://user-images.githubusercontent.com/69943959/129902404-a285273a-3cc1-4552-bd19-4370278e1063.PNG" width=250">
+<img src="https://user-images.githubusercontent.com/69943959/129902404-a285273a-3cc1-4552-bd19-4370278e1063.PNG" width="250">
+
 
 ### search by month:
 
