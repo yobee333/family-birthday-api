@@ -21,18 +21,6 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         console.log(err)
     })
 
-
-
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
-
-app.get('/', (req, res) => {
-    res.render('index.ejs', { info: [] })
-})
-
 //Auth0
 const { auth, requiresAuth } = require('express-openid-connect');
 app.use(
@@ -46,6 +34,18 @@ app.use(
         idpLogout: true,
     })
 );
+
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))//handle nested data coming thru the query string
+app.use(express.json())
+
+
+app.get('/', (req, res) => {
+    res.render('index.ejs', { info: [] })
+})
+
+
 
 
 // req.isAuthenticated is provided from the auth router
