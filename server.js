@@ -36,9 +36,9 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
 // );
 
 const { auth, requiresAuth } = require('express-openid-connect');
-const { reset } = require('nodemon')
+
 const config = {
-    authRequired: true,
+    authRequired: false,
     auth0Logout: true,
     issuerBaseURL: process.env.ISSUER_BASE_URL,
     baseURL: process.env.BASE_URL,
@@ -47,14 +47,12 @@ const config = {
     idpLogout: true,
 }
 
-
-
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))//handle nested data coming thru the query string
 app.use(express.json())
-app.use(auth(config))
 
+app.use(auth(config))
 
 app.get('/', (req, res) => {
     const isAuthenticated = req.oidc.isAuthenticated();
@@ -73,30 +71,20 @@ app.get('/login', (req, res) => {
     res.render('landingpage.ejs')
 });
 
-
-// app.get('/', (req, res) => {
-//     res.render('index.ejs', { info: [] })
-// })
-
-
-// app.get('/login', (req, res) => {
-//     console.log(req.oidc.isAuthenticated())
-//     res.render('index.ejs', { isAuthenticated: req.oidc.isAuthenticated({}) })
-// });
-
+app.use(requiresAuth())
 
 app.get('/profile', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user))
 })
 
-app.get('/logout', (req, res) => {
-    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out')
+app.get('/logout', requiresAuth(), (req, res) => {
+
     res.render('landingpage.ejs')
 })
 
 //sort birthdays by month to get all birthdays in that month
 
-app.get('/filterBirthdays', async (req, res) => {
+app.get('/filterBirthdays', requiresAuth(), async (req, res) => {
     const user_id = req.oidc.user.sub;
     const month = req.query.month
     const getBirthday = await db.collection('birthdays').find({
@@ -109,7 +97,7 @@ app.get('/filterBirthdays', async (req, res) => {
 })
 
 // find by all names
-app.get('/filterByName', async (req, res) => {
+app.get('/filterByName', requiresAuth(), async (req, res) => {
     const { searchTerm } = req.query;
     const regex = new RegExp(searchTerm, 'gi');
     const matches = await db.collection('birthdays').find({
@@ -136,7 +124,7 @@ app.get('/filterByName', async (req, res) => {
 // }
 
 
-app.get('/birthdayForm', (req, res) => {
+app.get('/birthdayForm', requiresAuth(), (req, res) => {
     res.render('addbirthday.ejs')
 })
 
@@ -155,7 +143,7 @@ app.post('/addBirthday', async (req, res) => {
 
 //Delete birthday
 
-app.delete('/deleteBirthday', async (req, res) => {
+app.delete('/deleteBirthday', requiresAuth(), async (req, res) => {
     const id = req.body.id
     console.log("id prop from req obj: ", id)
     const birthday = await db.collection('birthdays').deleteOne({
