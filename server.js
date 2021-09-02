@@ -89,10 +89,10 @@ app.get('/profile', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user))
 })
 
-// app.get('/logout', (req, res) => {
-//     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out')
-//     res.render('index.ejs')
-// })
+app.get('/logout', (req, res) => {
+    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out')
+    res.render('landingpage.ejs')
+})
 
 //sort birthdays by month to get all birthdays in that month
 
