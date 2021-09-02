@@ -47,8 +47,6 @@ const config = {
     idpLogout: true,
 }
 
-
-
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))//handle nested data coming thru the query string
@@ -56,13 +54,20 @@ app.use(express.json())
 app.use(auth(config))
 
 app.get('/', (req, res) => {
-    res.render('index.ejs', { info: [] })
+    const isAuthenticated = req.oidc.isAuthenticated();
+    console.log("check if user is authenticated: ", isAuthenticated)
+    if(!isAuthenticated){
+        return res.redirect('/login');
+    }
+    res.render('index.ejs', { info: [], isAuthenticated })
 })
 
-
 app.get('/login', (req, res) => {
-    console.log(req.oidc.isAuthenticated())
-    res.render('index.ejs', { isAuthenticated: req.oidc.isAuthenticated() })
+    console.log("check if user is authenticated: ", req.oidc.isAuthenticated())
+    if(req.oidc.isAuthenticated()){
+        return res.redirect('/');
+    }
+    res.render('landingpage.ejs')
 });
 
 
