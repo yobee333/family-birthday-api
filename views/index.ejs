@@ -14,6 +14,13 @@
 
 <body>
     <h1>Search for a birthday</h1>
+    <nav>
+        <% if(!isAuthenticated) { %>
+        <h4 class="login"><a href="/login">LOGIN</a></h4>
+        <% } else { %> 
+        <h4 class="logout"><a href="/logout">logout</a></h4>
+        <% } %>
+    </nav>
     <section class=" find-birthday-name container">
             <h2>Search by Name</h2>
             <form action="/filterByName" method="GET">
@@ -22,10 +29,7 @@
                 <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
             </form>
 
-            <!-- <form action="/filterNickName" method="GET">
-                <input type="text" placeholder="Nick Name" name="nickName">Nickname</input>
-                <button id="submit" type="submit" value="submit" class="button">SUBMIT</button>
-            </form> -->
+
             </section>
             <section class="find-birthday-month container">
                 <h2>Search by month</h2>
@@ -72,7 +76,7 @@
                 </ul>
             </section>
             <h4><a href="/birthdayForm">add birthday</a></h4>
-            <h4 class="logout"><a href="/logout">logout</a></h4>
+            
 
             <script src="js/main.js"></script>
 </body>
