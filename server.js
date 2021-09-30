@@ -29,12 +29,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
 //Auth0
 const { auth, requiresAuth } = require('express-openid-connect');
 
-app.get('/', (req,res) =>{
-    if(req.oidc.isAuthenticated()){
-        return res.redirect('/birthdayPage')
-    }
-    res.render('landingpage.ejs')
-})
+
 
 app.use(
     auth({
@@ -48,7 +43,15 @@ app.use(
     })
 );
 
+app.get('/', (req,res) =>{
+    if(req.oidc.isAuthenticated()){
+        return res.redirect('/birthdayPage')
+    }
+    res.render('landingpage.ejs')
+})
+
 app.use(requiresAuth())
+
 
 app.get('/birthdayPage', (req, res) => {
     const isAuthenticated = req.oidc.isAuthenticated();
