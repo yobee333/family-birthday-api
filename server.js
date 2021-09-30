@@ -22,30 +22,30 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     })
 
 //Auth0
-// const { auth, requiresAuth } = require('express-openid-connect');
-// app.use(
-//     auth({
-//         authRequired: true,
-//         auth0Logout: true,
-//         issuerBaseURL: process.env.ISSUER_BASE_URL,
-//         baseURL: process.env.BASE_URL,
-//         clientID: process.env.CLIENT_ID,
-//         secret: process.env.SECRET,
-//         idpLogout: true,
-//     })
-// );
-
 const { auth, requiresAuth } = require('express-openid-connect');
+app.use(
+    auth({
+        authRequired: true,
+        auth0Logout: true,
+        issuerBaseURL: process.env.ISSUER_BASE_URL,
+        baseURL: process.env.BASE_URL,
+        clientID: process.env.CLIENT_ID,
+        secret: process.env.SECRET,
+        idpLogout: true,
+    })
+);
 
-const config = {
-    authRequired: false,
-    auth0Logout: true,
-    issuerBaseURL: process.env.ISSUER_BASE_URL,
-    baseURL: process.env.BASE_URL,
-    clientID: process.env.CLIENT_ID,
-    secret: process.env.SECRET,
-    idpLogout: true,
-}
+// const { auth, requiresAuth } = require('express-openid-connect');
+
+// const config = {
+//     authRequired: false,
+//     auth0Logout: true,
+//     issuerBaseURL: process.env.ISSUER_BASE_URL,
+//     baseURL: process.env.BASE_URL,
+//     clientID: process.env.CLIENT_ID,
+//     secret: process.env.SECRET,
+//     idpLogout: true,
+// }
 
 
 
@@ -53,7 +53,8 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))//handle nested data coming thru the query string
 app.use(express.json())
-app.use(auth(config))
+// app.use(auth(config))
+
 
 
 app.get('/', (req, res) => {
@@ -70,7 +71,7 @@ app.get('/login', (req, res) => {
     if(req.oidc.isAuthenticated()){
         return res.redirect('/');
     }
-    res.render('landingpage.ejs')
+    
 });
 
 app.use(requiresAuth())
@@ -92,7 +93,8 @@ app.get('/profile', requiresAuth(), (req, res) => {
 
 app.get('/logout', requiresAuth(), (req, res) => {
 
-    res.render('landingpage.ejs')
+    // res.render('/profile')
+    res.redirect('/')
 })
 
 //sort birthdays by month to get all birthdays in that month
