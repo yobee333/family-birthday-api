@@ -13,6 +13,7 @@ I admit, I'm bad with birthdays because they aren't that important to me! The in
 ## work in progress updates
 
 App is mostly functional! Updates needed:
+- fix path and decide on a landing page or not
 - styling
 - customize auth paths
 - add landing page
