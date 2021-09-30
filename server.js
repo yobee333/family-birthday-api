@@ -35,26 +35,26 @@ app.use(
     })
 );
 
-// const { auth, requiresAuth } = require('express-openid-connect');
-
-// const config = {
-//     authRequired: false,
-//     auth0Logout: true,
-//     issuerBaseURL: process.env.ISSUER_BASE_URL,
-//     baseURL: process.env.BASE_URL,
-//     clientID: process.env.CLIENT_ID,
-//     secret: process.env.SECRET,
-//     idpLogout: true,
-// }
-
-
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))//handle nested data coming thru the query string
 app.use(express.json())
-// app.use(auth(config))
 
+// This works but I know it's not ideal
+app.get('/test', (req,res) =>{
+    res.render('landingpage.ejs')
+})
+
+
+// app.get('/test', (req, res) => {
+//     const isAuthenticated = req.oidc.isAuthenticated();
+//     console.log("check if user is authenticated: ", isAuthenticated)
+//     if(!isAuthenticated){
+//         return res.redirect('/login');
+//     }
+//     res.render('index.ejs', { info: [], isAuthenticated })
+// })
 
 
 app.get('/', (req, res) => {
@@ -69,7 +69,7 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     console.log("check if user is authenticated: ", req.oidc.isAuthenticated())
     if(req.oidc.isAuthenticated()){
-        return res.redirect('/');
+        return res.redirect('/')
     }
     
 });
@@ -92,9 +92,10 @@ app.get('/profile', requiresAuth(), (req, res) => {
 })
 
 app.get('/logout', requiresAuth(), (req, res) => {
-
-    // res.render('/profile')
-    res.redirect('/')
+    if(!isAuthenticated){
+        return res.redirect('/test');
+    }
+    res.render('landingpage.ejs', { info: [], isAuthenticated })
 })
 
 //sort birthdays by month to get all birthdays in that month
