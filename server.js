@@ -25,7 +25,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
 const { auth, requiresAuth } = require('express-openid-connect');
 app.use(
     auth({
-        authRequired: true,
+        authRequired: false,
         auth0Logout: true,
         issuerBaseURL: process.env.ISSUER_BASE_URL,
         baseURL: process.env.BASE_URL,
@@ -35,26 +35,17 @@ app.use(
     })
 );
 
-
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))//handle nested data coming thru the query string
-app.use(express.json())
-
 // This works but I know it's not ideal
 app.get('/test', (req,res) =>{
     res.render('landingpage.ejs')
 })
 
 
-// app.get('/test', (req, res) => {
-//     const isAuthenticated = req.oidc.isAuthenticated();
-//     console.log("check if user is authenticated: ", isAuthenticated)
-//     if(!isAuthenticated){
-//         return res.redirect('/login');
-//     }
-//     res.render('index.ejs', { info: [], isAuthenticated })
-// })
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))//handle nested data coming thru the query string
+app.use(express.json())
+
 
 
 app.get('/', (req, res) => {
