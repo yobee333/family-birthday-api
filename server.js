@@ -40,7 +40,7 @@ app.use(
         clientID: process.env.CLIENT_ID,
         secret: process.env.SECRET,
         idpLogout: true,
-        domain: process.env.DOMAIN
+        domain: process.env.DOMAIN,
     })
 );
 
