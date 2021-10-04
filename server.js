@@ -40,6 +40,7 @@ app.use(
         clientID: process.env.CLIENT_ID,
         secret: process.env.SECRET,
         idpLogout: true,
+        CallBackURL: process.env.AUTH0_CALLBACK_URL,
     })
 );
 
