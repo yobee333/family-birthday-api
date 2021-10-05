@@ -5,22 +5,6 @@
 // on the server, search your db by birthday id and delete it
 // do window.reload here in client js to reload the page
 
-
-// document.querySelector('.delete-button').addEventListener('click', confirmDelete)
-
-// function confirmDelete(){
-    
-//     let okDelete = confirm('Do you want to delete this person and their birthday permanently?')
-    
-//     if(okDelete === false){
-//         console.log('cancel')
-        
-//     }else{
-//         document.getElementById('delete').addEventListener('click', removeBirthday)
-//     }
-    
-// }
-
 const deleteBtn = document.querySelectorAll('.delete-button')
 
 Array.from(deleteBtn).forEach((el) =>{
